@@ -4,10 +4,7 @@ export class ClanInformation {
   badge: {
     image: string
   };
-  members []: {
-    name: string;
-    donations: number;
-  };
+  members: any[];
 
   constructor(description: string, name: string, url: string, members) {
     this.description = description;

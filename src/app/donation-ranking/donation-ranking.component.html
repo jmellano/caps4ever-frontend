@@ -1,53 +1,99 @@
-<h2>{{ci.description}}</h2>
-<img width="100" alt="Caps4Ever" src={{ci.badge.image}}>
+<h1>
+  Bienvenue sur la page du clan
+  <span>{{ title }}</span> !
+  <img width="30" alt="Caps4Ever" src={{ci.badge.image}}>
+</h1>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm">
+      <h2>{{ci.description}}</h2>
+    </div>
+    <div class="col-sm">
+      <div class="alert alert-primary">
+        <ul class="list-group"> L'objectif est d'avoir le meilleur score sur une saison
+          <li class="list-group-item">3 top 3 => Ajoint</li>
+          <li class="list-group-item">1 top 10 => Ainé</li>
+          <li class="list-group-item">1 score négatif => rétrogradé voir exclu</li>
+        </ul>
+      </div>
 
+    </div>
+    <div class="col-sm">
+      <div class="alert alert-primary">
+        <ul class="list-group">Les règles
+          <li class="list-group-item">Partage de carte : 1 point (Non Implémenté)</li>
+          <li class="list-group-item">Cartes gagnées lors des jours de collections : 1 point</li>
+          <li class="list-group-item"> Victoire au jour de guerre : 500 points</li>
+          <li class="list-group-item"> Non participation au jour de guerre alors qu'on est engagé : -1500 points</li>
+          <li class="list-group-item">Non participation à un combat du jour de collection : -250 points / match non joué</li>
+          <li class="list-group-item">Non participation à une guerre : -100 points (Non Implémenté)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 
-<ul>Les règles sont simples
-  <li>Partage de carte : 1 point</li>
-  <li>Cartes gagnées lors des jours de collections : 1 point</li>
-  <li> Victoire au jour de guerre : 500 points</li>
-  <li> Non participation au jour de guerre alors qu'on est engagé : -1500 points</li>
-  <li>Non participation à un combat du jour de collection : -250 points / match non joué</li>
-  <li>Non participation à une guerre : -100 points</li>
-</ul>
+<div class="container-fluid">
+  <div class="row">
 
-<ul>  L'objectif est d'avoir le meilleur score sur une saison
-  <li>3 top 3 => Ajoint</li>
-  <li>1 top 10 => Ainé</li>
-  <li>1 score négatif => rétrogradé voir exclu</li>
-</ul>
+    <div class="col-sm">
+      <ul class="alert alert-success list-group donations">Classement des dons depuis Lundi :
+        <li class="list-group-item" *ngFor="let member of ci.members">
+          <span class="badge">{{member.name}}</span> {{member.donations}}
 
-<ul class="donations">Classement par dons :
-  <li *ngFor="let member of ci.members">
-    <span class="badge">{{member.name}}</span> {{member.donations}}
-  </li>
-</ul>
-
-
-
-<ul class="donations">Classement par saisons :
-  <li *ngFor="let war_ranking of cwl.war_ranking">
-    <span class="badge">Saison : {{war_ranking.season}}</span>
-    <ul>
-      <li *ngFor="let ranking of war_ranking.ranking">
-        <span class="badge">{{ranking.name}}</span> {{ranking.score}}
-      </li>
-    </ul>
-  </li>
-</ul>
-
-
-
-<!--
-<h4>Classements des saisons :</h4>
-
-<h2>{{ donation.member }} Details</h2>
-<div><span>count: </span>{{donation.count}}</div>
-
-  <h2>My Heroes</h2>
-  <ul class="heroes">
-    <li *ngFor="let donation of donations">
-      <span class="badge">{{donation.member}}</span> {{donation.count}}
-    </li>
-  </ul>
--->
+        </li>
+      </ul>
+    </div>
+    <div class="col-sm"> Saison en cours :
+      <div class="row">
+        <div class="col-sm">
+          <ul class="alert alert-success list-group donations">
+            <li class="alert alert-success list-group-item" *ngFor="let war_ranking of cwl.war_ranking | saisonEnCours: true">
+              <span class="badge">Saison : {{war_ranking.season}}</span>
+              <ul class="alert alert-success list-group donations">
+                <li class="list-group-item" *ngFor="let ranking of war_ranking.ranking | meilleurSaison : true">
+                  <span class="badge">{{ranking.name}}</span> {{ranking.score}}
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="col-sm">
+          <ul class="alert alert-danger list-group donations">
+            <li class="list-group-item" *ngFor="let war_ranking of cwl.war_ranking | saisonEnCours: true">
+              <span class="badge">Saison : {{war_ranking.season}}</span>
+              <ul class="list-group donations">
+                <li class="list-group-item" *ngFor="let ranking of war_ranking.ranking | meilleurSaison : false">
+                  <span class="badge">{{ranking.name}}</span> {{ranking.score}}
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm">Saisons précédentes :
+      <ul class="alert alert-success list-group donations">
+        <li class="alert alert-success list-group-item" *ngFor="let war_ranking of cwl.war_ranking | saisonEnCours: false">
+          <span class="badge">Saison : {{war_ranking.season}}</span>
+          <div class="row">
+            <div class="col-sm">
+              <ul class="alert alert-success list-group donations">
+                <li class="list-group-item" *ngFor="let ranking of war_ranking.ranking | meilleurSaison : true">
+                  <span class="badge">{{ranking.name}}</span> {{ranking.score}}
+                </li>
+              </ul>
+            </div>
+            <div class="col-sm">
+              <ul class="alert alert-danger list-group donations">
+                <li class="list-group-item" *ngFor="let ranking of war_ranking.ranking | meilleurSaison : false">
+                  <span class="badge">{{ranking.name}}</span> {{ranking.score}}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
