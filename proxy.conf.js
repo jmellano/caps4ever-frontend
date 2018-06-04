@@ -1,8 +1,8 @@
 const PROXY_CONFIG = [
   {
     context: [
-      "/clan",
-      "/stats",
+      "/api/clan",
+      "/api/stats",
     ],
     target: "http://localhost:8081",
     secure: false

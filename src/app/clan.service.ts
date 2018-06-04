@@ -9,8 +9,8 @@ import {ClanWarLogs} from './clanWarLogs';
   providedIn: 'root'
 })
 export class ClanService {
-  private clanInformationUrl = 'http://localhost:4200/clan';  // URL to web api
-  private clanWarLogsUrl = 'http://localhost:4200/stats';  // URL to web api
+  private clanInformationUrl = '/api/clan';  // URL to web api
+  private clanWarLogsUrl = '/api/stats';  // URL to web api
 
   constructor(private http: HttpClient) {
   }
